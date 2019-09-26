@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="USFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+        <EntityType Name="BasicUserInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepartmentAndDesignation" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Travel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="TravelFuel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TravelCase" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TravelBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lodging" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TravelDate" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NoOfDays" Type="int" Nullable="false" />
+          <Property Name="TravelFrom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TravelTo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TravelDistance" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TravelDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DATotal" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="VehicleFuelTotal" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="AdvanceCalculated" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TravelID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Travel">
+          <End Role="BasicUserInfo" Type="Self.BasicUserInfo" Multiplicity="1" />
+          <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BasicUserInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Travel">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TravelDetails">
+          <End Role="Travel" Type="Self.Travel" Multiplicity="1" />
+          <End Role="TravelDetails" Type="Self.TravelDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Travel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TravelDetails">
+              <PropertyRef Name="TravelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="USFModelStoreContainer">
+          <EntitySet Name="BasicUserInfo" EntityType="Self.BasicUserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Travel" EntityType="Self.Travel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TravelDetails" EntityType="Self.TravelDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Travel" Association="Self.FK_Travel">
+            <End Role="BasicUserInfo" EntitySet="BasicUserInfo" />
+            <End Role="Travel" EntitySet="Travel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TravelDetails" Association="Self.FK_TravelDetails">
+            <End Role="Travel" EntitySet="Travel" />
+            <End Role="TravelDetails" EntitySet="TravelDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2006/04/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self">
+        <EntityContainer Name="Model1Container"></EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS" Space="C-S">
+        <Alias Key="Model" Value="Model1" />
+        <Alias Key="Target" Value="Model1.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model1Container" StorageEntityContainer="Model1TargetContainer"></EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
